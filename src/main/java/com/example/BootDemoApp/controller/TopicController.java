@@ -30,8 +30,13 @@ public class TopicController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String create(@RequestBody Topic topic) {
-		topicService.addTopic(topic);
-		return "Topic is created";
+		try {
+			topicService.addTopic(topic);
+			return "Topic is created";
+		} catch (Exception e) {
+			return "Exception " + e;
+		}
+
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)

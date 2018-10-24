@@ -4,12 +4,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.example.BootDemoAp.model.Topic;
+import com.example.BootDemoAp.model.topicRepository;
 
 @Service
 public class TpicService {
+	@Autowired
+	private topicRepository repo;
+
 	private List<Topic> topics = new ArrayList<>(Arrays.asList(new Topic("Html", "HTML", "Design Language"),
 			new Topic("Javascript", "JS", "Beutification Language"), new Topic("Java", "Java", "Backend Language"),
 			new Topic("Sql", "SQL", "Database Language")));
@@ -22,8 +28,9 @@ public class TpicService {
 		return topics.stream().filter(t -> t.getId().equals(id)).findFirst().get();
 	}
 
-	public void addTopic(Topic topic) {
-		topics.add(topic);
+	public String addTopic(Topic topic) {
+		repo.save(topic);
+		return "Topic is created";
 	}
 
 	public void updateTopic(Topic topic, String id) {
